@@ -1,0 +1,31 @@
+#PBS -S /bin/bash
+#PBS -N fastqc_run
+#PBS -l nodes=1:ppn=1
+#PBS -l mem=8gb
+#PBS -l walltime=16:00:00
+#PBS -o fastqc_run.out
+#PBS -e fastqc_run.err
+
+module load java-jdk/1.8.0_92
+module load fastqc/0.11.5 
+
+echo '$FILE:', $FILE
+
+# Run fastqc through the symlinks located here: 
+cd /group/ober-resources/users/mstein3/rna.seq.2017/symlinks_fastq
+
+# Run fastqc and output to a new director 
+find -name '*$FILE*' | xargs fastqc * -o /scratch/mstein3/rnaseq_processing2017/FastQC_output
+
+
+
+
+
+
+
+
+
+
+
+
+

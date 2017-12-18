@@ -1,0 +1,21 @@
+#PBS -S /bin/bash
+#PBS -N gemma2jobs
+#PBS -l nodes=1:ppn=1
+#PBS -l mem=16gb
+#PBS -l walltime=2:00:00
+#PBS -o gemma_jobs.out
+#PBS -e gemma_jobs.err
+
+module load gcc/6.2.0
+module load gemma/0.94 
+module load R/3.3.2
+
+# This scripts runs a command to run GEMMA, along with all the necessary files 
+
+# General Arguments: 
+#Rscript Run_gemma.R <pheno_list_filename> <pheno column number> <ld_prune_snp_list_file> <plink_file_prefix> <covariate_file> <kinship_file>
+
+# Running with TaqMan rs1801274 genotyping information: 
+Rscript /group/nicolae-lab/users/mstein3/FcReceptor_June2017/final_clean_files/FcReceptor_project_scripts/RunGemmaAssociations.R /group/nicolae-lab/users/mstein3/FcReceptor_June2017/new_CytoScripts_June2017/CytoNameCD_list.txt $FILE /group/nicolae-lab/users/mstein3/FcReceptor_June2017/LDprunelist_Imp80CR_TaqMan_merge.prune.in /group/nicolae-lab/users/mstein3/FcReceptor_June2017/Imp80CR_TaqMan_merge /group/nicolae-lab/users/mstein3/FcReceptor_June2017/CD_covariates_Sex_Age_21417.txt /group/nicolae-lab/users/mstein3/FcReceptor_June2017/additive.coef.2015-12-15
+
+

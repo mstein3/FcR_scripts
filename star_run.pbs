@@ -1,0 +1,27 @@
+#PBS -S /bin/bash
+#PBS -N star_run_ImHT
+#PBS -l nodes=1:ppn=4
+#PBS -l mem=48gb
+#PBS -l walltime=28:00:00
+#PBS -o star_run_hg19.out
+#PBS -e star_run_hg19.err
+
+module load gcc/6.2.0
+module load STAR/2.5.2b
+
+# Set up directories: 
+INDEX_GENOME_DIR=/scratch/mstein3/rnaseq_processing2017/Index_Genome_STAR/hg19_index
+INPUT_DIR=/group/ober-resources/users/mstein3/rna.seq.2017/symlinks_fastq
+OUTPUT_DIR=/scratch/mstein3/rnaseq_processing2017/STAR_mapped_hg19
+
+
+
+for FQ in /group/ober-resources/users/mstein3/rna.seq.2017/symlinks_fastq/*$FILE*;
+do 
+	# Set up output file name
+	OUTPUT_NAME="$(basename $FQ).star"
+	# Run STAR
+	STAR --runThreadN 4 --genomeDir $INDEX_GENOME_DIR --readFilesCommand zcat --readFilesIn $FQ --outFileNamePrefix $OUTPUT_DIR/$OUTPUT_NAME --outSAMunmapped Within --outSAMtype BAM Unsorted --quantMode GeneCounts --outReadsUnmapped Fastx
+
+done
+

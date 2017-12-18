@@ -1,0 +1,17 @@
+#PBS -S /bin/bash
+#PBS -N multiQC_run
+#PBS -l nodes=1:ppn=1
+#PBS -l mem=16gb
+#PBS -l walltime=8:00:00
+#PBS -o multiQC_run.out
+#PBS -e multiQC_run.err
+
+module load gcc/6.2.0 
+module load python/2.7.13 
+
+# Set up directories: 
+OUTPUT_DIR=/scratch/mstein3/rnaseq_processing2017/multiQC_outputs
+OUT_NAME="$(basename $FILE).multiqc"
+
+# Run multiQC
+# multiqc /scratch/mstein3/rnaseq_processing2017/FastQC_output/*$FILE* -o $OUTPUT_DIR -n $OUT_NAME
