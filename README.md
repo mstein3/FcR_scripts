@@ -24,5 +24,5 @@ GeneCounts_Processing.R: Further processing to remove genes with low count per m
 ## 3. Gene Expression, data analysis: 
 FcReceptor_GX_PCA.R: Plot gene expression data using PCA.
 
-FcReceptor_AGvsGG_DE.R: Calculate differential expression of genes between individuals with genotype AG and individuals with genotype GG for rs1801274.
+FcyR_DE_analyses.R: Calculate differential expression of genes between individuals by rs1801274 genotype.
 
