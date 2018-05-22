@@ -1,0 +1,50 @@
+
+# ------------ qsub parameters -------------------------- #
+#PBS -S /bin/bash
+#PBS -N gemma_DE_FcGeno
+#PBS -l nodes=1:ppn=1
+#PBS -l mem=16gb
+#PBS -l walltime=4:00:00
+#PBS -o gemma_DE_FcGeno.out
+#PBS -e gemma_DE_FcGeno.err
+
+# --------------- load modules --------------#
+module load gcc
+module load gemma 
+module load R
+module load plink
+
+# -------------- array info ----------------# 
+INPUT_FILE=$FILE
+
+# Submit Rscript for each 
+while read LINE; 
+do
+    echo "$LINE"
+	COUNTS=/group/nicolae-lab/users/mstein3/FcReceptor_June2017/gemma_DE_inputs/Fcgeno_input_3genotypes/CD3_Null_DiffGX_TreatbyGeno_PoolCorr_5118.txt
+	COVAR=/group/nicolae-lab/users/mstein3/FcReceptor_June2017/gemma_DE_inputs/Fcgeno_input_3genotypes/FcDE_Covar_Sex_Age_103.txt
+	RELAT=/group/nicolae-lab/users/mstein3/FcReceptor_June2017/additive.coef.2015-12-15
+	PREFIX_PLINK=/group/nicolae-lab/users/mstein3/FcReceptor_June2017/gemma_DE_inputs/Fcgeno_input_3genotypes/ImpTaqGeno_103
+	DIR_PHENO=/group/nicolae-lab/users/mstein3/FcReceptor_June2017/gemma_DE_output/PhenoDir
+ 	DIR_PLINK=/group/nicolae-lab/users/mstein3/FcReceptor_June2017/gemma_DE_output/PlinkDir
+	DIR_GEMMA=/group/nicolae-lab/users/mstein3/FcReceptor_June2017/gemma_DE_output/GemmaDir
+	
+	# Usage: Gemma_rs1801274_DE.R <counts> <covar_file> <relat> <prefix_plink> <gene_name> <dir_pheno> <dir_plink> <dir_gemma> 
+	Rscript /group/nicolae-lab/users/mstein3/FcReceptor_June2017/gemma_DE_scripts/Gemma_rs1801274_DE.R  $COUNTS $COVAR $RELAT $PREFIX_PLINK $LINE $DIR_PHENO $DIR_PLINK $DIR_GEMMA
+done < $INPUT_FILE
+
+
+# For the 3 genotype analysis: 
+# COUNTS=/group/nicolae-lab/users/mstein3/FcReceptor_June2017/gemma_DE_inputs/Fcgeno_input_3genotypes/CD3_Null_DiffGX_TreatbyGeno_PoolCorr_5118.txt
+# COVAR=/group/nicolae-lab/users/mstein3/FcReceptor_June2017/gemma_DE_inputs/Fcgeno_input_3genotypes/FcDE_Covar_Sex_Age_103.txt
+# PREFIX_PLINK=/group/nicolae-lab/users/mstein3/FcReceptor_June2017/gemma_DE_inputs/Fcgeno_input_3genotypes/ImpTaqGeno_103
+
+
+# What the arguments mean: 
+# COUNTS: quantile normalized, log 2 CPM gene counts, corrected for sequencing pool
+# RELAT: Relatedness matrix
+# PREFIX_PLINK: prefix of your plink files 
+# DIR_PHENO: directory to store phenotype information before including it in the plink file 
+# DIR_PLINK: directory for plink file output
+# DIR_GEMMA: directory for gemma analysis output. 
+
