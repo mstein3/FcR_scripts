@@ -26,3 +26,8 @@ FcReceptor_GX_PCA.R: Plot gene expression data using PCA.
 
 FcyR_DE_analyses.R: Calculate differential expression of genes between individuals by rs1801274 genotype.
 
+run_short_GeneLists.sh: Run multiple instances of Run_Gemma_Fc_DE.pbs with different gene inputs
+
+Run_Gemma_Fc_DE.pbs: Run Gemma_rs1801274_DE.R with different gene inputs
+
+Gemma_rs1801274_DE.R: Calculate differential expression by rs1801274 for each gene, using GEMMA to include a kinship matrix.
